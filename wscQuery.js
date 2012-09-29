@@ -1,9 +1,10 @@
+//自定义的事件绑定，兼容IE和Firefox
 function myAddEvent(obj, sEv, fn)
 {
-    if(obj.attachEvent)
+    if(obj.attachEvent)//兼容IE
     {
         obj.attachEvent('on'+sEv, function (){
-            if(false==fn.call(obj))
+            if(false==fn.call(obj))//这里用call是因为IE下事件绑定函数的this会丢失。
             {
                 event.cancelBubble=true;
                 return false;
@@ -22,6 +23,7 @@ function myAddEvent(obj, sEv, fn)
     }
 }
 
+//类名选择器，oParent下面的element节点，的class属性遍历
 function getByClass(oParent, sClass)
 {
     var aEle=oParent.getElementsByTagName('*');
@@ -51,17 +53,17 @@ function getStyle(obj, attr)
     }
 }
 
+//入口函数，也就是主函数
 function wscQuery(vArg)
 {
-    //用来保存选中的元素
-    this.elements=[];
+    this.elements=[];//用来保存选中的元素
     
     switch(typeof vArg)
     {
-        case 'function':
+        case 'function'://如果传入参数是方法，则进行window.onload事件加载。TODO:下次得DOMContentLoaded事件加载
             myAddEvent(window, 'load', vArg);
             break;
-        case 'string':
+        case 'string'://如果传入参数是字符串，则成为css选择器。TODO:完善CSS选择器的实现
             switch(vArg.charAt(0))
             {
                 case '#':   //ID选择器
@@ -69,10 +71,10 @@ function wscQuery(vArg)
                     
                     this.elements.push(obj);
                     break;
-                case '.':   //class
+                case '.':   //class类名选择器
                     this.elements=getByClass(document, vArg.substring(1));
                     break;
-                default:    //tagName
+                default:    //html标签选择器
                     this.elements=document.getElementsByTagName(vArg);
             }
             break;
@@ -283,6 +285,7 @@ wscQuery.prototype.extend=function (name, fn)
     wscQuery.prototype[name]=fn;
 };
 
+//把wscQuery函数封装成$函数
 function $(vArg)
 {
     return new wscQuery(vArg);
