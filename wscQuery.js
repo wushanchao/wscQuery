@@ -23,7 +23,7 @@ function myAddEvent(obj, sEv, fn)
     }
 }
 
-//类名选择器，oParent下面的element节点，的class属性遍历
+//类名选择器，oParent下面的element节点，的class属性遍历 
 function getByClass(oParent, sClass)
 {
     var aEle=oParent.getElementsByTagName('*');
