@@ -41,6 +41,7 @@ function getByClass(oParent, sClass)
     return aResult;
 }
 
+//获取计算过的最终样式，兼容IE
 function getStyle(obj, attr)
 {
     if(obj.currentStyle)
@@ -83,11 +84,12 @@ function wscQuery(vArg)
     }
 }
 
+//点击事件
 wscQuery.prototype.click=function (fn)
 {
     var i=0;
     
-    for(i=0;i<this.elements.length;i++)
+    for(i=0;i<this.elements.length;i++)//为了标签选择器返回的数组，加事件
     {
         myAddEvent(this.elements[i], 'click', fn);
     }
@@ -119,6 +121,7 @@ wscQuery.prototype.hide=function ()
     return this;
 };
 
+//鼠标移入移出事件
 wscQuery.prototype.hover=function (fnOver, fnOut)
 {
     var i=0;
@@ -147,10 +150,9 @@ wscQuery.prototype.css=function (attr, value)
     {
         if(typeof attr=='string')
         {
-        //return this.elements[0].style[attr];
             return getStyle(this.elements[0], attr);
         }
-        else
+        else//如果参数attr是{'width':'200px','height':'300px'}
         {
             for(i=0;i<this.elements.length;i++)
             {
@@ -164,12 +166,12 @@ wscQuery.prototype.css=function (attr, value)
         }
     }
     
-    return this;
+    return this;//链式操作
 };
 
 wscQuery.prototype.attr=function (attr, value)
 {
-    if(arguments.length==2)
+    if(arguments.length==2)//两个参数，设置属性
     {
         var i=0;
         
@@ -178,14 +180,15 @@ wscQuery.prototype.attr=function (attr, value)
             this.elements[i][attr]=value;
         }
     }
-    else
+    else//一个参数返回属性值
     {
         return this.elements[0][attr];
     }
     
-    return this;
+    return this;//链式操作
 };
 
+//点击切换函数绑定事件
 wscQuery.prototype.toggle=function ()
 {
     var i=0;
@@ -200,13 +203,14 @@ wscQuery.prototype.toggle=function ()
     {
         var count=0;
         myAddEvent(obj, 'click', function (){
-            _arguments[count++%_arguments.length].call(obj);
+            _arguments[count++%_arguments.length].call(obj);//通过取余数运算，来依次绑定点击事件
         });
     }
     
     return this;
 };
 
+//返回第n个元素
 wscQuery.prototype.eq=function (n)
 {
     return $(this.elements[n]);
