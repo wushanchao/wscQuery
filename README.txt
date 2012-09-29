@@ -1,0 +1,2 @@
+wscQuery是一个学习用的js框架。<br />
+模仿jQuery的用法，从而更好理解jQuery。
