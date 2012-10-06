@@ -11,7 +11,7 @@ $().extend('animate', function (json){
     {
         clearInterval(obj.timer);//物体运动时，防止用户多次调用计时器，造成运动混乱
         obj.timer=setInterval(function (){
-            var bStop=true;     //这一次运动就结束了——所有的值都到达了
+            var bStop=true;     //这一次运动就结束了，所有的值都到达了
             for(var attr in json)
             {
                 //1.取当前的值
