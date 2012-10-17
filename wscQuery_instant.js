@@ -1,7 +1,19 @@
 $().extend('input_instant',function (call_func) {
     //TODO:检测当前元素是否为input type=text的框
+    var input_flag = false;
+    for(var i=0; i<this.elements[0].attributes.length; i++){
+        if(this.elements[0].attributes[i].nodeValue == "text"){
+            input_flag = true;
+            break;
+        }
+        else{
+            input_flag = false;
+        }
+    }
+    if(input_flag == false){
+        throw ("获取的元素不是input type=text");
+    }
 
-    //如果是
     var last_value = "";
     myAddEvent(this.elements[0],"keyup",function(){
         var keywords = "";
@@ -18,5 +30,4 @@ $().extend('input_instant',function (call_func) {
         
     });
 
-    //如果不是，返回错误信息
 });
