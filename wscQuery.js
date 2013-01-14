@@ -28,16 +28,17 @@ function getByClass(oParent, sClass)
 {
     var aEle=oParent.getElementsByTagName('*');
     var aResult=[];
-    var i=0;
-    
-    for(i=0;i<aEle.length;i++)
-    {
-        if(aEle[i].className==sClass)
-        {
-            aResult.push(aEle[i]);
+    for(var j=0,j_length = aEle.length;j<j_length;j++){
+        // 为了class="a b";
+        var sClass_arr = aEle[j].className.split(' ');
+        for(var i=0;i<sClass_arr.length; i++){
+            if(sClass_arr[i]==sClass)
+            {
+                aResult.push(aEle[j]);
+            }
         }
+
     }
-    
     return aResult;
 }
 
